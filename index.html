@@ -1,257 +1,154 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Black Hole Visualization</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이력서 | 홍길동</title>
   <style>
-    html, body { 
-      height: 100%; 
+    /* ---------- 기본 스타일 ---------- */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
     }
 
     body {
-      height: 100%;
-      background-color: rgba(25,25,25,1);
-      overflow: hidden;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 0 1.2rem;
     }
 
-    #blackhole {
-      height: 100%;
-      width: 100%;
-      position: relative;
-      display: flex;
-    }
-
-    .centerHover {
-      width: 255px;
-      height: 255px;
-      background-color: transparent;
-      border-radius: 50%;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin-top: -128px;
-      margin-left: -128px;
-      z-index: 2;
-      cursor: pointer;
-      line-height: 255px;
+    header {
       text-align: center;
-      transition: all 500ms;
+      padding: 3rem 0 2rem;
     }
 
-    .centerHover.open {
-      opacity: 0;
-      pointer-events: none;
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .centerHover:hover span {
-      color: #DDD;
-    }
-
-    .centerHover:hover span:before, 
-    .centerHover:hover span:after { 
-      background-color: #DDD; 
-    }
-
-    .centerHover span {
+    .subtitle {
       color: #666;
-      font-family: serif;
-      font-size: 18px;
-      position: relative;
-      transition: all 500ms;
+      font-size: 0.95rem;
     }
 
-    .centerHover span:before,
-    .centerHover span:after {
-      content: '';
-      display: inline-block;
-      height: 1px;
-      width: 16px;
-      margin: 0 12px 4px;
-      background-color: #666;
-      transition: all 500ms;
+    /* ---------- 섹션 ---------- */
+    section {
+      max-width: 720px;
+      margin: 2.5rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
-    canvas {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      margin: auto;
+    section h2 {
+      border-left: 4px solid #4f46e5;
+      padding-left: 0.75rem;
+      margin-bottom: 1rem;
+      color: #222;
+    }
+
+    /* ---------- 기술 스택 ---------- */
+    .skills-list {
+      list-style: none;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    /* ---------- 프로젝트 ---------- */
+    .project {
+      margin-bottom: 1.5rem;
+    }
+
+    .project a {
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .project a:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------- 푸터 ---------- */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- 반응형 ---------- */
+    @media (max-width: 600px) {
+      section {
+        padding: 1.5rem;
+      }
+
+      .profile-img {
+        width: 100px;
+        height: 100px;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="blackhole">
-    <div class="centerHover"><span>ENTER</span></div>
-  </div>
+  <header class="header">
+    <img src="images/profile.jpg" alt="프로필 사진" class="profile-img" />
+    <h1>홍길동</h1>
+    <p class="subtitle">Frontend Developer | Web Enthusiast</p>
+  </header>
 
-  <script>
-    function blackhole(element) {
-      const container = document.querySelector(element);
-      const h = container.offsetHeight;
-      const w = container.offsetWidth;
-      const cw = w;
-      const ch = h;
-      const maxorbit = 255;
-      const centery = ch / 2;
-      const centerx = cw / 2;
+  <main>
+    <section id="about">
+      <h2>소개</h2>
+      <p>
+        안녕하세요! 사용자 경험을 중시하는 프론트엔드 개발자 홍길동입니다.  
+        현대적인 웹 기술과 미니멀한 디자인으로 직관적이고 반응형 웹사이트를 만듭니다.
+      </p>
+    </section>
 
-      const startTime = new Date().getTime();
-      let currentTime = 0;
+    <section id="skills">
+      <h2>기술 스택</h2>
+      <ul class="skills-list">
+        <li>HTML5 / CSS3 / JavaScript (ES6+)</li>
+        <li>React / Vue</li>
+        <li>Node.js / Express</li>
+        <li>Git / GitHub / REST API</li>
+      </ul>
+    </section>
 
-      const stars = [];
-      let collapse = false;
-      let expanse = false;
-      let returning = false;
+    <section id="projects">
+      <h2>프로젝트</h2>
+      <div class="project">
+        <h3>📘 포트폴리오 웹사이트</h3>
+        <p>React 기반의 개인 포트폴리오 사이트로, GitHub Pages에 배포했습니다.</p>
+        <a href="#" target="_blank">프로젝트 보기 →</a>
+      </div>
+      <div class="project">
+        <h3>🛒 쇼핑몰 클론 프로젝트</h3>
+        <p>팀 프로젝트로 React + Firebase를 활용한 쇼핑몰 사이트를 제작했습니다.</p>
+        <a href="#" target="_blank">프로젝트 보기 →</a>
+      </div>
+    </section>
 
-      const canvas = document.createElement('canvas');
-      canvas.width = cw;
-      canvas.height = ch;
-      container.appendChild(canvas);
-      const context = canvas.getContext("2d");
-      context.globalCompositeOperation = "multiply";
+    <section id="contact">
+      <h2>연락처</h2>
+      <p>📧 <a href="mailto:hong@example.com">hong@example.com</a></p>
+      <p>🔗 <a href="https://github.com/username" target="_blank">GitHub</a></p>
+      <p>💼 <a href="https://linkedin.com/in/username" target="_blank">LinkedIn</a></p>
+    </section>
+  </main>
 
-      function setDPI(canvas, dpi) {
-        if (!canvas.style.width) canvas.style.width = canvas.width + 'px';
-        if (!canvas.style.height) canvas.style.height = canvas.height + 'px';
-        const scaleFactor = dpi / 96;
-        canvas.width = Math.ceil(canvas.width * scaleFactor);
-        canvas.height = Math.ceil(canvas.height * scaleFactor);
-        const ctx = canvas.getContext('2d');
-        ctx.scale(scaleFactor, scaleFactor);
-      }
-
-      function rotate(cx, cy, x, y, angle) {
-        const radians = angle;
-        const cos = Math.cos(radians);
-        const sin = Math.sin(radians);
-        const nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
-        const ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
-        return [nx, ny];
-      }
-
-      setDPI(canvas, 192);
-
-      class Star {
-        constructor() {
-          const rands = [];
-          rands.push(Math.random() * (maxorbit / 2) + 1);
-          rands.push(Math.random() * (maxorbit / 2) + maxorbit);
-          this.orbital = (rands.reduce((p, c) => p + c, 0) / rands.length);
-          this.x = centerx;
-          this.y = centery + this.orbital;
-          this.yOrigin = centery + this.orbital;
-          this.speed = (Math.floor(Math.random() * 2.5) + 1.5) * Math.PI / 180;
-          this.rotation = 0;
-          this.startRotation = (Math.floor(Math.random() * 360) + 1) * Math.PI / 180;
-          this.id = stars.length;
-          this.collapseBonus = this.orbital - (maxorbit * 0.7);
-          if (this.collapseBonus < 0) this.collapseBonus = 0;
-          this.color = 'rgba(255,255,255,' + (1 - ((this.orbital) / 255)) + ')';
-          this.hoverPos = centery + (maxorbit / 2) + this.collapseBonus;
-          this.expansePos = centery + (this.id % 100) * -10 + (Math.floor(Math.random() * 20) + 1);
-          this.prevR = this.startRotation;
-          this.prevX = this.x;
-          this.prevY = this.y;
-          this.originalY = this.yOrigin;
-          stars.push(this);
-        }
-
-        draw() {
-          if (!expanse && !returning) {
-            this.rotation = this.startRotation + (currentTime * this.speed);
-            if (!collapse) {
-              if (this.y > this.yOrigin) this.y -= 2.5;
-              if (this.y < this.yOrigin - 4) this.y += (this.yOrigin - this.y) / 10;
-            } else {
-              this.trail = 1;
-              if (this.y > this.hoverPos) this.y -= (this.hoverPos - this.y) / -5;
-              if (this.y < this.hoverPos - 4) this.y += 2.5;
-            }
-          } else if (expanse && !returning) {
-            this.rotation = this.startRotation + (currentTime * (this.speed / 2));
-            if (this.y > this.expansePos) this.y -= Math.floor(this.expansePos - this.y) / -80;
-          } else if (returning) {
-            this.rotation = this.startRotation + (currentTime * this.speed);
-            if (Math.abs(this.y - this.originalY) > 2) {
-              this.y += (this.originalY - this.y) / 50;
-            } else {
-              this.y = this.originalY;
-              this.yOrigin = this.originalY;
-            }
-          }
-
-          context.save();
-          context.fillStyle = this.color;
-          context.strokeStyle = this.color;
-          context.beginPath();
-          const oldPos = rotate(centerx, centery, this.prevX, this.prevY, -this.prevR);
-          context.moveTo(oldPos[0], oldPos[1]);
-          context.translate(centerx, centery);
-          context.rotate(this.rotation);
-          context.translate(-centerx, -centery);
-          context.lineTo(this.x, this.y);
-          context.stroke();
-          context.restore();
-
-          this.prevR = this.rotation;
-          this.prevX = this.x;
-          this.prevY = this.y;
-        }
-      }
-
-      const centerHover = document.querySelector('.centerHover');
-      centerHover.addEventListener('click', function() {
-        collapse = false;
-        expanse = true;
-        returning = false;
-        this.classList.add('open');
-        setTimeout(() => {
-          expanse = false;
-          returning = true;
-          setTimeout(() => {
-            returning = false;
-            this.classList.remove('open');
-          }, 8000);
-        }, 25000);
-      });
-
-      centerHover.addEventListener('mouseover', function() {
-        if (!expanse) collapse = true;
-      });
-      centerHover.addEventListener('mouseout', function() {
-        if (!expanse) collapse = false;
-      });
-
-      function loop() {
-        const now = new Date().getTime();
-        currentTime = (now - startTime) / 50;
-        context.fillStyle = 'rgba(25,25,25,0.2)';
-        context.fillRect(0, 0, cw, ch);
-        for (let i = 0; i < stars.length; i++) {
-          if (stars[i]) stars[i].draw();
-        }
-        requestAnimationFrame(loop);
-      }
-
-      function init() {
-        context.fillStyle = 'rgba(25,25,25,1)';
-        context.fillRect(0, 0, cw, ch);
-        for (let i = 0; i < 2500; i++) {
-          new Star();
-        }
-        loop();
-      }
-
-      init();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      blackhole('#blackhole');
-    });
-  </script>
+  <footer>
+    <p>© 2025 홍길동. All rights reserved.</p>
+  </footer>
 </body>
 </html>
