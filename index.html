@@ -3,24 +3,291 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>이력서 | 홍길동</title>
-  <style>
-    /* ---------- 기본 ---------- */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Pretendard", "Noto Sans KR", sans-serif; }
-    html, body { height: 100%; width: 100%; overflow-x: hidden; }
-    body { background: #0b0b0b; color: #fff; }
+  <title>이력서 | Your Name</title>
 
-    /* ---------- 배경 blackhole ---------- */
-    #blackhole {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      overflow: hidden;
+  <style>
+    /* 초기화 및 변수 */
+    * {
+      border: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    /* ---------- 콘텐츠 ---------- */
+    :root {
+      --hue: 223deg;
+      --sat: 10%;
+      --gray1: hsl(var(--hue) var(--sat) 95%);
+      --gray10: hsl(var(--hue) var(--sat) 5%);
+      --accent: hsl(210deg 90% 50%);
+      --trans-dur: 0.4s;
+      color-scheme: light dark;
+      font-size: clamp(1rem, 0.9rem + 0.5vw, 1.1rem);
+    }
+
+    body,
+    button {
+      color: light-dark(var(--gray10), var(--gray1));
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      transition: background-color var(--trans-dur), color var(--trans-dur);
+    }
+
+    body {
+      background-color: light-dark(var(--gray1), var(--gray10));
+      transition: background-color 1s ease-in-out;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    body.playing {
+      background: linear-gradient(160deg, hsl(210deg 90% 55%), hsl(280deg 70% 50%));
+      color: white;
+    }
+
     main {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    /* 헤더 */
+    header {
       position: relative;
-      z-index: 2;
-      p
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    header img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid light-dark(var(--gray10), var(--gray1));
+      margin-bottom: 1rem;
+      transition: transform 0.4s ease;
+    }
+
+    body.playing header img {
+      transform: rotate(360deg);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin: 0.3rem 0;
+    }
+
+    header p {
+      opacity: 0.7;
+    }
+
+    /* 버튼을 헤더 우측 상단에 고정 */
+    #root {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    /* 섹션 */
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    section h2 {
+      border-left: 4px solid light-dark(var(--gray10), var(--gray1));
+      padding-left: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .projects {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .project {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .project h3 {
+      margin-bottom: 0.5rem;
+      color: light-dark(var(--gray10), var(--gray1));
+    }
+
+    footer {
+      text-align: center;
+      opacity: 0.6;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    /* 플레이/일시정지 버튼 기본 스타일 */
+    .btn {
+      background-color: transparent;
+      cursor: pointer;
+      width: 4em;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn__svg {
+      width: 100%;
+      height: auto;
+      transition: transform var(--trans-dur);
+    }
+
+    .btn__svg-line1,
+    .btn__svg-line2,
+    .btn__svg-line3,
+    .btn__svg-ring1,
+    .btn__svg-ring2,
+    .btn__svg-ring3 {
+      stroke: light-dark(var(--gray10), var(--gray1));
+      transform-origin: 50px 50px;
+      transition: stroke var(--trans-dur);
+    }
+
+    body.playing .btn__svg-line1,
+    body.playing .btn__svg-line2,
+    body.playing .btn__svg-line3,
+    body.playing .btn__svg-ring1,
+    body.playing .btn__svg-ring2,
+    body.playing .btn__svg-ring3 {
+      stroke: white;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="images/profile.jpg" alt="프로필 이미지">
+    <h1>Your Name</h1>
+    <p>Frontend Developer | UX/UI Enthusiast</p>
+    <div id="root"></div>
+  </header>
+
+  <main>
+    <section id="intro">
+      <h2>소개</h2>
+      <p>안녕하세요! 사용자 경험을 중시하는 프론트엔드 개발자입니다. React, TypeScript, Next.js를 활용해 직관적이고 세련된 웹을 만듭니다.</p>
+    </section>
+
+    <section id="skills">
+      <h2>기술 스택</h2>
+      <ul>
+        <li><strong>Frontend:</strong> HTML, CSS, JavaScript (ES6+), React, Next.js</li>
+        <li><strong>Backend:</strong> Node.js, Express, MongoDB</li>
+        <li><strong>Tools:</strong> Git, Figma, VSCode</li>
+      </ul>
+    </section>
+
+    <section id="projects">
+      <h2>프로젝트</h2>
+      <div class="projects">
+        <div class="project">
+          <h3>포트폴리오 웹사이트</h3>
+          <p>React와 Tailwind CSS로 제작한 개인 포트폴리오 사이트입니다. 반응형 디자인과 애니메이션 효과를 통해 사용자 경험을 향상시켰습니다.</p>
+        </div>
+        <div class="project">
+          <h3>쇼핑몰 클론 프로젝트</h3>
+          <p>Next.js 기반 전자상거래 사이트 클론으로, 상품 목록, 장바구니, 로그인 기능을 구현했습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>연락처</h2>
+      <p>📧 <a href="mailto:youremail@example.com">youremail@example.com</a></p>
+      <p>🌐 <a href="https://github.com/yourgithub" target="_blank">GitHub</a> | 
+         <a href="https://linkedin.com/in/yourlinkedin" target="_blank">LinkedIn</a></p>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Your Name. All rights reserved.
+  </footer>
+
+  <script type="module">
+    import React, { StrictMode, useState, useEffect } from "https://esm.sh/react";
+    import { createRoot } from "https://esm.sh/react-dom/client";
+
+    function PlayPauseButton() {
+      const [isPlaying, setIsPlaying] = useState(false);
+
+      useEffect(() => {
+        if (isPlaying) {
+          document.body.classList.add("playing");
+        } else {
+          document.body.classList.remove("playing");
+        }
+      }, [isPlaying]);
+
+      const label = isPlaying ? "Pause" : "Play";
+
+      return (
+        <button
+          className="btn"
+          type="button"
+          aria-label={label}
+          data-playing={isPlaying}
+          onClick={() => setIsPlaying(val => !val)}
+        >
+          <svg
+            className="btn__svg"
+            viewBox="0 0 100 100"
+            width="100px"
+            height="100px"
+            aria-hidden="true"
+          >
+            <g
+              fill="none"
+              stroke="currentcolor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="7"
+            >
+              <circle cx="50" cy="50" r="46" opacity="0.2" />
+              <line className="btn__svg-line1" x1="42" y1="30" x2="42" y2="70" />
+              <line className="btn__svg-line2" x1="42" y1="70" x2="70" y2="50" />
+              <line className="btn__svg-line3" x1="70" y1="50" x2="42" y2="30" />
+              <circle className="btn__svg-ring1" cx="50" cy="50" r="46" />
+              <path
+                className="btn__svg-ring2"
+                strokeDasharray="55 365"
+                strokeDashoffset="55"
+                d="M 41.996 4.631 C 41.996 4.631 47.464 3.48 52.3 7.107 C 58.062 11.43 58 18 58 18 L 58 70"
+              />
+              <path
+                className="btn__svg-ring3"
+                strokeDasharray="40 365"
+                strokeDashoffset="40"
+                d="M 41.996 4.631 C 41.996 4.631 47.464 3.48 52.3 7.107 C 58.062 11.43 58 18 58 18 L 58 76"
+                transform="scale(1, -1)"
+              />
+            </g>
+          </svg>
+        </button>
+      );
+    }
+
+    createRoot(document.getElementById("root")).render(
+      <StrictMode>
+        <PlayPauseButton />
+      </StrictMode>
+    );
+  </script>
+</body>
+</html>
