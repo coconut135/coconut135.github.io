@@ -5,150 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>이력서 | 홍길동</title>
   <style>
-    /* ---------- 기본 스타일 ---------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+    /* ---------- 기본 ---------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Pretendard", "Noto Sans KR", sans-serif; }
+    html, body { height: 100%; width: 100%; overflow-x: hidden; }
+    body { background: #0b0b0b; color: #fff; }
+
+    /* ---------- 배경 blackhole ---------- */
+    #blackhole {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      overflow: hidden;
     }
 
-    body {
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-      padding: 0 1.2rem;
-    }
-
-    header {
-      text-align: center;
-      padding: 3rem 0 2rem;
-    }
-
-    .profile-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .subtitle {
-      color: #666;
-      font-size: 0.95rem;
-    }
-
-    /* ---------- 섹션 ---------- */
-    section {
-      max-width: 720px;
-      margin: 2.5rem auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    section h2 {
-      border-left: 4px solid #4f46e5;
-      padding-left: 0.75rem;
-      margin-bottom: 1rem;
-      color: #222;
-    }
-
-    /* ---------- 기술 스택 ---------- */
-    .skills-list {
-      list-style: none;
-      display: grid;
-      gap: 0.5rem;
-    }
-
-    /* ---------- 프로젝트 ---------- */
-    .project {
-      margin-bottom: 1.5rem;
-    }
-
-    .project a {
-      color: #4f46e5;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .project a:hover {
-      text-decoration: underline;
-    }
-
-    /* ---------- 푸터 ---------- */
-    footer {
-      text-align: center;
-      padding: 2rem 0;
-      color: #999;
-      font-size: 0.9rem;
-    }
-
-    /* ---------- 반응형 ---------- */
-    @media (max-width: 600px) {
-      section {
-        padding: 1.5rem;
-      }
-
-      .profile-img {
-        width: 100px;
-        height: 100px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header class="header">
-    <img src="images/profile.jpg" alt="프로필 사진" class="profile-img" />
-    <h1>홍길동</h1>
-    <p class="subtitle">Frontend Developer | Web Enthusiast</p>
-  </header>
-
-  <main>
-    <section id="about">
-      <h2>소개</h2>
-      <p>
-        안녕하세요! 사용자 경험을 중시하는 프론트엔드 개발자 홍길동입니다.  
-        현대적인 웹 기술과 미니멀한 디자인으로 직관적이고 반응형 웹사이트를 만듭니다.
-      </p>
-    </section>
-
-    <section id="skills">
-      <h2>기술 스택</h2>
-      <ul class="skills-list">
-        <li>HTML5 / CSS3 / JavaScript (ES6+)</li>
-        <li>React / Vue</li>
-        <li>Node.js / Express</li>
-        <li>Git / GitHub / REST API</li>
-      </ul>
-    </section>
-
-    <section id="projects">
-      <h2>프로젝트</h2>
-      <div class="project">
-        <h3>📘 포트폴리오 웹사이트</h3>
-        <p>React 기반의 개인 포트폴리오 사이트로, GitHub Pages에 배포했습니다.</p>
-        <a href="#" target="_blank">프로젝트 보기 →</a>
-      </div>
-      <div class="project">
-        <h3>🛒 쇼핑몰 클론 프로젝트</h3>
-        <p>팀 프로젝트로 React + Firebase를 활용한 쇼핑몰 사이트를 제작했습니다.</p>
-        <a href="#" target="_blank">프로젝트 보기 →</a>
-      </div>
-    </section>
-
-    <section id="contact">
-      <h2>연락처</h2>
-      <p>📧 <a href="mailto:hong@example.com">hong@example.com</a></p>
-      <p>🔗 <a href="https://github.com/username" target="_blank">GitHub</a></p>
-      <p>💼 <a href="https://linkedin.com/in/username" target="_blank">LinkedIn</a></p>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 홍길동. All rights reserved.</p>
-  </footer>
-</body>
-</html>
+    /* ---------- 콘텐츠 ---------- */
+    main {
+      position: relative;
+      z-index: 2;
+      p
